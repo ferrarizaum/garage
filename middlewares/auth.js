@@ -24,105 +24,25 @@ async function generateToken(req, res) {
 }
 
 function verifyToken(req, res, next) {
-  const token = req.headers["authorization"];
-  if (!token) {
-    return res.status(403).json({ message: "No token provided" });
-  }
-
-  jwt.verify(token, secretKey, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: "Failed to authenticate token" });
-    }
-    req.decoded = decoded;
-    next();
-  });
-}
-
-function verifyAdmin(req, res, next) {
+  // Get the token from the request headers
   const token = req.headers.authorization;
 
   if (!token) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  jwt.verify(token, secretKey, (err, decoded) => {
+  // Verify the token
+  jwt.verify(token, "secret_key", (err, decoded) => {
     if (err) {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    if (!decoded.isAdmin) {
-      return res.status(403).json({ error: "Forbidden" });
-    }
-
+    // If the token is valid, you can access the decoded information
     req.user = decoded;
+
+    // Call the next middleware or route handler
     next();
   });
 }
 
-function verifyLoggedIn(req, res, next) {
-  const token = req.headers.authorization;
-
-  if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-
-  jwt.verify(token, secretKey, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-
-    req.user = decoded;
-    next();
-  });
-}
-
-module.exports = { verifyToken, verifyAdmin, verifyLoggedIn, generateToken };
-/*
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
-const secretKey = process.env.SECRET_KEY;
-
-function verifyAdmin(req, res, next) {
-  const token = req.headers.authorization;
-
-  if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-
-  jwt.verify(token, secretKey, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-
-    if (!decoded.isAdmin) {
-      return res.status(403).json({ error: "Forbidden" });
-    }
-
-    req.user = decoded;
-    next();
-  });
-}
-
-function verifyLoggedIn(req, res, next) {
-  const token = req.headers.authorization;
-
-  if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-
-  jwt.verify(token, secretKey, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-
-    req.user = decoded;
-    next();
-  });
-}
-
-module.exports = {
-  verifyAdmin,
-  verifyLoggedIn,
-};
-
-*/
+module.exports = { verifyToken, generateToken };

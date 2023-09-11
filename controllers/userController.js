@@ -1,51 +1,8 @@
 const User = require("../models/user");
 
-function generateToken(user) {
-  return jwt.sign({ id: user.id, isAdmin: user.isAdmin }, secretKey);
-}
-
 //gets all user, only admins
 async function getAllUsers(req, res) {
   res.json(users);
-}
-
-//check if user logged
-async function checkUserLogin(req, res) {
-  const token = req.headers.authorization;
-
-  if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-
-  jwt.verify(token, secretKey, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-
-    res.json({ message: "Access granted", user: decoded });
-  });
-}
-
-//user login
-async function userLogin(req, res) {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    res.status(400).json({ error: "Missing email or password" });
-    return;
-  }
-
-  const user = users.find(
-    (user) => user.email === email && user.password === password
-  );
-
-  if (!user) {
-    res.status(401).json({ error: "Invalid credentials" });
-    return;
-  }
-
-  const token = generateToken(user);
-  res.json({ token });
 }
 
 //delete user
@@ -145,8 +102,6 @@ module.exports = {
   initializeDummyData, //done
   updateUser, //done
   getAllUsers,
-  checkUserLogin,
-  userLogin,
   deleteUser, //done
   // Add more controller functions as needed
 };

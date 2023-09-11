@@ -28,12 +28,14 @@ app.post("/api/login", auth.generateToken);
 const verifyToken = require("./middlewares/auth");
 
 // Protected routes
-//app.use("/api", verifyToken);
+app.get("/protected-route", auth.verifyToken, (req, res) => {
+  // The user is authenticated; you can access user information via req.user
+  res.json({ message: "Authenticated", user: req.user });
+});
 
 // Add more CRUD routes as needed (e.g., PUT and DELETE)
 
 // Start the server
 app.listen(port, async () => {
   console.log(`Server is running on port ${port}`);
-  //await userController.initializeDummyData(); // Initialize dummy data when the server starts
 });
