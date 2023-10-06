@@ -62,7 +62,7 @@ async function createUser(req, res) {
 }
 
 // Initialize dummy data
-async function initializeDummyData(req, res) {
+async function initializeUserDummyData(req, res) {
   const dummyUsers = [
     {
       name: "jose",
@@ -95,13 +95,11 @@ async function initializeDummyData(req, res) {
   }
 }
 
-// Export the controller functions
 module.exports = {
   getUsers, //done
   createUser, //done
-  initializeDummyData, //done
+  initializeUserDummyData, //done
   updateUser, //done
   getAllUsers,
   deleteUser, //done
-  // Add more controller functions as needed
 };
