@@ -1,10 +1,5 @@
 const User = require("../models/user");
 
-//gets all user, only admins
-async function getAllUsers(req, res) {
-  res.json(users);
-}
-
 //delete user
 async function deleteUser(req, res) {
   const { id } = req.params;
@@ -39,7 +34,7 @@ async function updateUser(req, res) {
   users[index].email = email;
   res.json(users[index]);
 }
-//-------------------------------------------------
+
 // Get all users
 async function getUsers(req, res) {
   try {
@@ -100,6 +95,5 @@ module.exports = {
   createUser, //done
   initializeUserDummyData, //done
   updateUser, //done
-  getAllUsers,
   deleteUser, //done
 };
