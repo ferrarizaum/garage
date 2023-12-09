@@ -47,7 +47,7 @@ function verifyAdmin(req, res, next) {
     } else {
       const user = decoded.user;
       if (user.isAdmin) {
-        res.json({ message: "User is admin" });
+        next();
       } else {
         res.status(403).json({ message: "Forbidden" });
       }

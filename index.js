@@ -20,8 +20,11 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 //Dummy Routes
 app.get("/api/dummy/user", userController.initializeUserDummyData);
-app.get("/api/dummy/car", carController.initializeCarDummyData);
 app.get("/api/dummy/owner", ownerController.initializeOwnerDummyData);
+app.get("/api/dummy/car", carController.initializeCarDummyData);
+
+//Auth Routes
+app.post("/api/login", auth.generateToken);
 
 //Users Routes
 app.get("/api/users", auth.verifyAdmin, userController.getUsers);
@@ -29,14 +32,6 @@ app.post("/api/users", userController.createUser);
 app.delete("/api/users/:id", userController.deleteUser);
 app.put("/api/users/:id", userController.updateUser);
 
-app.post("/api/login", auth.generateToken);
-
-const verifyToken = require("./middlewares/auth");
-
-// Protected routes
-app.get("/protected-route", auth.verifyToken, (req, res) => {
-  res.json({ message: "Authenticated", user: req.user });
-});
 
 app.listen(port, async () => {
   console.log(`Server is running on port ${port}`);

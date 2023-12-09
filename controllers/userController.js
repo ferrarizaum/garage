@@ -1,5 +1,16 @@
 const User = require("../models/user");
 
+//create a new user
+async function createUser(req, res) {
+  try {
+    const newUser = new User(req.body);
+    await newUser.save();
+    res.json(newUser);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 //delete user
 async function deleteUser(req, res) {
   const { id } = req.params;
@@ -35,7 +46,7 @@ async function updateUser(req, res) {
   res.json(users[index]);
 }
 
-// Get all users
+//get all users
 async function getUsers(req, res) {
   try {
     const users = await User.find({});
@@ -45,18 +56,8 @@ async function getUsers(req, res) {
   }
 }
 
-// Create a new user
-async function createUser(req, res) {
-  try {
-    const newUser = new User(req.body);
-    await newUser.save();
-    res.json(newUser);
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
-  }
-}
 
-// Initialize dummy data
+//initialize dummy data
 async function initializeUserDummyData(req, res) {
   const dummyUsers = [
     {
