@@ -1,6 +1,6 @@
 const User = require("../models/user");
 
-//create a new user
+//create user
 async function createUser(req, res) {
   try {
     const newUser = new User(req.body);
@@ -55,7 +55,6 @@ async function getUsers(req, res) {
     res.status(500).json({ message: "Internal server error" });
   }
 }
-
 
 //initialize dummy data
 async function initializeUserDummyData(req, res) {
