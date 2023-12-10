@@ -77,6 +77,13 @@ async function initializeUserDummyData(req, res) {
       password: "user456",
       isAdmin: false,
     },
+    {
+      name: "lucas",
+      email: "lucas@gmail.com",
+      password: "admin654",
+      isAdmin: true,
+    },
+    
   ];
 
   try {

@@ -1,5 +1,67 @@
 const Owner = require("../models/owner");
 
+//create owner
+async function createOwner(req, res) {
+  try {
+    const newOwner = new Owner(req.body);
+    await newOwner.save();
+    res.json(newOwner);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+//delete owner
+async function deleteOwner(req, res) {
+  try {
+    const ownerName =  req.body.name;
+    const deletedOwner = await Owner.findOneAndDelete({ name: ownerName });
+    if (!deletedOwner) {
+      return res.status(404).json({ message: "Owner not found" });
+    }
+
+    res.json({ message: "Owner deleted successfully", deletedOwner });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+//update user
+async function updateOwner(req, res) {
+  try {
+    const ownerName = req.params.name;
+    if (!ownerName) {
+      return res.status(400).json({ message: "Owner name is required for update" });
+    }
+
+    const updatedOwner = await Owner.findOneAndUpdate(
+      { name: ownerName },
+      { $set: req.body }, 
+      { new: true } 
+    );
+
+    if (!updatedOwner) {
+      return res.status(404).json({ message: "Owner not found" });
+    }
+
+    res.json({ message: "Owner updated successfully", updatedOwner });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+//get all owners
+async function getOwners(req, res) {
+  try {
+    const owners = await Owner.find({});
+    res.json(owners);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 async function initializeOwnerDummyData(req, res) {
   const dummyOwners = [
     {
@@ -17,6 +79,11 @@ async function initializeOwnerDummyData(req, res) {
       cellphone: 77777777,
       address: "Cidade das Cidades numero numero",
     },
+    {
+      name: "Lucas Rafael",
+      cellphone: 66666666,
+      address: "Sertamopolis Parana",
+    },
   ];
 
   try {
@@ -31,10 +98,9 @@ async function initializeOwnerDummyData(req, res) {
 }
 
 module.exports = {
-  // getUsers, //done
-  // createUser, //done
+  createOwner, //done
+  deleteOwner, //done
+  updateOwner, //done
+  getOwners, //done
   initializeOwnerDummyData, //done
-  // updateUser, //done
-  // getAllUsers,
-  // deleteUser, //done
 };
