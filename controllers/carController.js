@@ -91,6 +91,13 @@ async function initializeCarDummyData(req, res) {
       price: 20000,
       ownerName: "Lucas Rafael",
     },
+    {
+      model: "Mustang",
+      maker: "Ford",
+      year: "1969",
+      price: 1500000,
+      ownerName: "Hernandes Zanella",
+    },
   ];
 
   try {

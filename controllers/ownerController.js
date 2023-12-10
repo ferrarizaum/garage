@@ -84,6 +84,11 @@ async function initializeOwnerDummyData(req, res) {
       cellphone: 66666666,
       address: "Sertamopolis Parana",
     },
+    {
+      name: "Hernandes Zanella",
+      cellphone: 67996653483,
+      address: "Chapadão do Sul-MS",
+    },
   ];
 
   try {
