@@ -34,13 +34,11 @@ async function updateCar(req, res) {
     if (!carName) {
       return res.status(400).json({ message: "Car name is required for update" });
     }
-
     const updatedCar = await Car.findOneAndUpdate(
-      { name: ownerName },
+      { model: carName },
       { $set: req.body }, 
       { new: true } 
     );
-
     if (!updatedCar) {
       return res.status(404).json({ message: "Car not found" });
     }

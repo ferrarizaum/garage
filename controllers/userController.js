@@ -13,37 +13,43 @@ async function createUser(req, res) {
 
 //delete user
 async function deleteUser(req, res) {
-  const { id } = req.params;
-  const index = users.findIndex((user) => user.id === parseInt(id));
+  try {
+    const userName =  req.body.name;
+    const deletedUser = await User.findOneAndDelete({ name: userName });
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-  if (index === -1) {
-    res.status(404).json({ error: "User not found" });
-    return;
+    res.json({ message: "User deleted successfully", deletedUser});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
   }
-
-  users.splice(index, 1);
-  res.json({ message: "User deleted" });
 }
 
 //update user
 async function updateUser(req, res) {
-  const { id } = req.params;
-  const { name, email } = req.body;
-  const index = users.findIndex((user) => user.id === parseInt(id));
+  try {
+    const userName = req.params.name;
+    if (!userName) {
+      return res.status(400).json({ message: "User name is required for update" });
+    }
 
-  if (index === -1) {
-    res.status(404).json({ error: "User not found" });
-    return;
+    const updatedUser = await User.findOneAndUpdate(
+      { name: userName },
+      { $set: req.body }, 
+      { new: true } 
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ message: "User updated successfully", updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
   }
-
-  if (!name || !email) {
-    res.status(400).json({ error: "Missing name or email" });
-    return;
-  }
-
-  users[index].name = name;
-  users[index].email = email;
-  res.json(users[index]);
 }
 
 //get all users
