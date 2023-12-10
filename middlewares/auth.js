@@ -21,7 +21,6 @@ async function generateToken(req, res) {
 
 function verifyToken(req, res, next) {
   const token = req.headers.authorization;
-
   if (!token) {
     return res.status(401).json({ error: "Unauthorized" });
   }
@@ -31,7 +30,11 @@ function verifyToken(req, res, next) {
       return res.status(401).json({ error: "Unauthorized" });
     }
     req.user = decoded;
-    next();
+    if (req.user.isAdmin || req.user) {
+      next();
+    } else {
+      res.status(403).json({ message: "Forbidden" });
+    }
   });
 }
 
