@@ -98,9 +98,9 @@ async function initializeCarDummyData(req, res) {
       const newCar = new Car(carData);
       await newCar.save();
     }
-    res.json("Dummy car data inserted succesfully");
+    console.log("Dummy car data inserted succesfully");
   } catch (error) {
-    res.json({ "Something went wrong inserting dummy car data": error });
+    console.log({ "Something went wrong inserting dummy car data": error });
   }
   
 }

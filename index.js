@@ -13,16 +13,23 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+async function dbInitialize(req, res) {
+  try {
+    mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    userController.initializeUserDummyData();
+    ownerController.initializeOwnerDummyData();
+    carController.initializeCarDummyData();
+    res.json("Database created and Dummy data inserted succesfully");
+  } catch (error) {
+    res.json({ "Something went wrong creating Database or inserting Dummy data": error });
+  } 
+}
 
-
-//Dummy Routes
-app.get("/api/dummy/user", userController.initializeUserDummyData);
-app.get("/api/dummy/owner", ownerController.initializeOwnerDummyData);
-app.get("/api/dummy/car", carController.initializeCarDummyData);
+//Installation Routes and doc Routes
+app.get("/install", dbInitialize);
 
 //Auth Routes
 app.post("/api/login", auth.generateToken);

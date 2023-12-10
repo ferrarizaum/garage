@@ -97,9 +97,9 @@ async function initializeUserDummyData(req, res) {
       const newUser = new User(userData);
       await newUser.save();
     }
-    res.json("Dummy data inserted succesfully");
+    console.log("Dummy user data inserted succesfully");
   } catch (error) {
-    res.json({ "Something went wrong inserting data": error });
+    console.log({ "Something went wrong inserting user data": error });
   }
 }
 

@@ -91,9 +91,9 @@ async function initializeOwnerDummyData(req, res) {
       const newOwner = new Owner(ownerData);
       await newOwner.save();
     }
-    res.json("Dummy owner data inserted succesfully");
+    console.log("Dummy owner data inserted succesfully");
   } catch (error) {
-    res.json({ "Something went wrong inserting dummy owner data": error });
+    console.log({ "Something went wrong inserting dummy owner data": error });
   }
 }
 
