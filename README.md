@@ -18,5 +18,5 @@ Todas as rotas de manipulacao de usuario sao protegidas pelo middleware de verif
 Todas as outras rotas precisam de um usuario logado ou um admin logado.<br />
 Use a rota /docs para acessar a documentacao do swagger.<br />
 
-Jose Carlos Ferrari<br />
+Jose Carlos Ferrari.<br />
 Lucas Rafael Rodrigues do Nascimento
