@@ -1,5 +1,34 @@
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: User management
+ */
+
 const User = require("../models/user");
 
+/**
+ * @swagger
+ * /api/users:
+ *   post:
+ *     summary: Create a new user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: User created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Internal server error
+ */
 //create user
 async function createUser(req, res) {
   try {
@@ -11,6 +40,36 @@ async function createUser(req, res) {
   }
 }
 
+/**
+ * @swagger
+ * /api/users:
+ *   delete:
+ *     summary: Delete user by name
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             properties:
+ *               name:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 deletedUser:
+ *                   $ref: '#/components/schemas/User'
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
 //delete user
 async function deleteUser(req, res) {
   try {
@@ -27,6 +86,39 @@ async function deleteUser(req, res) {
   }
 }
 
+/**
+ * @swagger
+ * /api/users/{name}:
+ *   put:
+ *     summary: Update user by name
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: User name
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: User name is required for update
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
 //update user
 async function updateUser(req, res) {
   try {
@@ -52,6 +144,24 @@ async function updateUser(req, res) {
   }
 }
 
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Get all users
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Internal server error
+ */
 //get all users
 async function getUsers(req, res) {
   try {
@@ -62,6 +172,18 @@ async function getUsers(req, res) {
   }
 }
 
+/**
+ * @swagger
+ * /api/dummy/user:
+ *   get:
+ *     summary: Initialize dummy user data
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Dummy user data inserted successfully
+ *       500:
+ *         description: Something went wrong inserting user data
+ */
 //initialize dummy data
 async function initializeUserDummyData(req, res) {
   const dummyUsers = [

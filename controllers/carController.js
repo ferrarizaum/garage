@@ -1,5 +1,36 @@
+/**
+ * @swagger
+ * tags:
+ *   name: Cars
+ *   description: Car management
+ */
+
+
 const Car = require("../models/car");
 
+
+/**
+ * @swagger
+ * /api/cars:
+ *   post:
+ *     summary: Create a new car
+ *     tags: [Cars]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Car'
+ *     responses:
+ *       200:
+ *         description: Car created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Car'
+ *       500:
+ *         description: Internal server error
+ */
 //create car
 async function createCar(req, res) {
   try {
@@ -11,11 +42,41 @@ async function createCar(req, res) {
   }
 }
 
+/**
+ * @swagger
+ * /api/cars:
+ *   delete:
+ *     summary: Delete car by model name
+ *     tags: [Cars]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             properties:
+ *               name:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Car deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 deletedCar:
+ *                   $ref: '#/components/schemas/Car'
+ *       404:
+ *         description: Car not found
+ *       500:
+ *         description: Internal server error
+ */
 //delete car
 async function deleteCar(req, res) {
   try {
-    const carName =  req.body.name;
-    const deletedCar = await Car.findOneAndDelete({ name: carName });
+    const carName =  req.body.model;
+    const deletedCar = await Car.findOneAndDelete({ model: carName });
     if (!deletedCar) {
       return res.status(404).json({ message: "Car not found" });
     }
@@ -27,6 +88,40 @@ async function deleteCar(req, res) {
   }
 }
 
+
+/**
+ * @swagger
+ * /api/cars/{name}:
+ *   put:
+ *     summary: Update car by model name
+ *     tags: [Cars]
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Car model name
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Car'
+ *     responses:
+ *       200:
+ *         description: Car updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Car'
+ *       400:
+ *         description: Car model name is required for update
+ *       404:
+ *         description: Car not found
+ *       500:
+ *         description: Internal server error
+ */
 //update car
 async function updateCar(req, res) {
   try {
@@ -50,6 +145,24 @@ async function updateCar(req, res) {
   }
 }
 
+/**
+ * @swagger
+ * /api/cars:
+ *   get:
+ *     summary: Get all cars
+ *     tags: [Cars]
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Car'
+ *       500:
+ *         description: Internal server error
+ */
 //get all cars
 async function getCars(req, res) {
   try {
@@ -60,6 +173,18 @@ async function getCars(req, res) {
   }
 }
 
+/**
+ * @swagger
+ * /api/dummy/car:
+ *   get:
+ *     summary: Initialize dummy car data
+ *     tags: [Cars]
+ *     responses:
+ *       200:
+ *         description: Dummy car data inserted successfully
+ *       500:
+ *         description: Something went wrong inserting dummy car data
+ */
 // Initialize dummy data
 async function initializeCarDummyData(req, res) {
   const dummyCars = [
