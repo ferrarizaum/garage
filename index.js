@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 });
 
-async function dbInitialize(req, res) {
+async function dummyData(req, res) {
   try {
     userController.initializeUserDummyData();
     ownerController.initializeOwnerDummyData();
@@ -29,7 +29,7 @@ async function dbInitialize(req, res) {
 }
 
 //Installation Routes
-app.get("/install", dbInitialize);
+app.get("/dummy", dummyData);
 
 //Auth Routes
 app.post("/api/login", auth.generateToken);
