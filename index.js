@@ -6,8 +6,6 @@ const userController = require("./controllers/userController");
 const carController = require("./controllers/carController");
 const ownerController = require("./controllers/ownerController");
 const auth = require("./middlewares/auth");
-const swaggerJSDoc = require('swagger-jsdoc');
-const swaggerUI = require('swagger-ui-express');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,37 +16,9 @@ mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-/**
- * @swagger
- * components:
- *   schemas:
- *     Car:
- *       type: object
- *       properties:
- *         model:
- *           type: string
- *           description: Car model
- *         maker:
- *           type: string
- *           description: Car maker
- *         year:
- *           type: string
- *           description: Car manufacturing year
- *         price:
- *           type: number
- *           description: Car price
- *         ownerName:
- *           type: string
- *           description: Owner's name
- */
-
 
 async function dbInitialize(req, res) {
   try {
-    mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
     userController.initializeUserDummyData();
     ownerController.initializeOwnerDummyData();
     carController.initializeCarDummyData();
@@ -58,61 +28,8 @@ async function dbInitialize(req, res) {
   } 
 }
 
-const swaggerOptions = {
-  swaggerDefinition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Car API',
-      version: '1.0.0',
-      description: 'API for managing cars',
-    },
-    components: {
-      schemas: {
-        Car: {
-          type: 'object',
-          properties: {
-            model: { type: 'string' },
-            maker: { type: 'string' },
-            year: { type: 'string' },
-            price: { type: 'number' },
-            ownerName: { type: 'string' },
-          },
-          required: ['model', 'maker', 'year', 'price', 'ownerName'],
-        },
-        Owner: {
-          type: 'object',
-          properties: {
-            name: { type: 'string' },
-            cellphone: { type: 'number' },
-            address: { type: 'string' },
-          },
-          required: ['name', 'cellphone', 'address'],
-        },
-        User: {
-          type: 'object',
-          properties: {
-            name: { type: 'string' },
-            email: { type: 'string' },
-            password: { type: 'string' },
-            isAdmin: { type: 'boolean' },
-          },
-          required: ['name', 'email', 'password'],
-        },
-      },
-    },
-  },
-  apis: [
-    './controllers/*.js',
-    './middlewares/*.js',
-    './models/*.js',
-  ], 
-};
-
-const swaggerSpec = swaggerJSDoc(swaggerOptions);
-
-//Installation Routes and doc Routes
+//Installation Routes
 app.get("/install", dbInitialize);
-app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 //Auth Routes
 app.post("/api/login", auth.generateToken);

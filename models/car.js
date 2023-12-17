@@ -1,33 +1,3 @@
-/**
- * @swagger
- * components:
- *   schemas:
- *     Car:
- *       type: object
- *       properties:
- *         model:
- *           type: string
- *           description: The model name of the car.
- *         maker:
- *           type: string
- *           description: The maker or manufacturer of the car.
- *         year:
- *           type: string
- *           description: The manufacturing year of the car.
- *         price:
- *           type: number
- *           description: The price of the car.
- *         ownerName:
- *           type: string
- *           description: The name of the owner of the car.
- *       required:
- *         - model
- *         - maker
- *         - year
- *         - price
- *         - ownerName
- */
-
 const mongoose = require("mongoose");
 
 const carSchema = new mongoose.Schema({

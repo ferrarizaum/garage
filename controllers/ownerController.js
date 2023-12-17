@@ -1,34 +1,5 @@
-/**
- * @swagger
- * tags:
- *   name: Owners
- *   description: Owner management
- */
-
 const Owner = require("../models/owner");
 
-/**
- * @swagger
- * /api/owners:
- *   post:
- *     summary: Create a new owner
- *     tags: [Owners]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Owner'
- *     responses:
- *       200:
- *         description: Owner created successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Owner'
- *       500:
- *         description: Internal server error
- */
 //create owner
 async function createOwner(req, res) {
   try {
@@ -40,36 +11,6 @@ async function createOwner(req, res) {
   }
 }
 
-/**
- * @swagger
- * /api/owners:
- *   delete:
- *     summary: Delete owner by name
- *     tags: [Owners]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             properties:
- *               name:
- *                 type: string
- *     responses:
- *       200:
- *         description: Owner deleted successfully
- *         content:
- *           application/json:
- *             schema:
- *               properties:
- *                 message:
- *                   type: string
- *                 deletedOwner:
- *                   $ref: '#/components/schemas/Owner'
- *       404:
- *         description: Owner not found
- *       500:
- *         description: Internal server error
- */
 //delete owner
 async function deleteOwner(req, res) {
   try {
@@ -86,39 +27,6 @@ async function deleteOwner(req, res) {
   }
 }
 
-/**
- * @swagger
- * /api/owners/{name}:
- *   put:
- *     summary: Update owner by name
- *     tags: [Owners]
- *     parameters:
- *       - in: path
- *         name: name
- *         schema:
- *           type: string
- *         required: true
- *         description: Owner name
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Owner'
- *     responses:
- *       200:
- *         description: Owner updated successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Owner'
- *       400:
- *         description: Owner name is required for update
- *       404:
- *         description: Owner not found
- *       500:
- *         description: Internal server error
- */
 //update user
 async function updateOwner(req, res) {
   try {
@@ -144,25 +52,6 @@ async function updateOwner(req, res) {
   }
 }
 
-
-/**
- * @swagger
- * /api/owners:
- *   get:
- *     summary: Get all owners
- *     tags: [Owners]
- *     responses:
- *       200:
- *         description: Successful response
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Owner'
- *       500:
- *         description: Internal server error
- */
 //get all owners
 async function getOwners(req, res) {
   try {
@@ -173,18 +62,6 @@ async function getOwners(req, res) {
   }
 }
 
-/**
- * @swagger
- * /api/dummy/owner:
- *   get:
- *     summary: Initialize dummy owner data
- *     tags: [Owners]
- *     responses:
- *       200:
- *         description: Dummy owner data inserted successfully
- *       500:
- *         description: Something went wrong inserting dummy owner data
- */
 async function initializeOwnerDummyData(req, res) {
   const dummyOwners = [
     {
