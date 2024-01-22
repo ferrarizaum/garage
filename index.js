@@ -8,13 +8,20 @@ const ownerController = require("./controllers/ownerController");
 const auth = require("./middlewares/auth");
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8190;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+});
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  next();
 });
 
 async function dummyData(req, res) {
@@ -24,8 +31,10 @@ async function dummyData(req, res) {
     carController.initializeCarDummyData();
     res.json("Database created and Dummy data inserted succesfully");
   } catch (error) {
-    res.json({ "Something went wrong creating Database or inserting Dummy data": error });
-  } 
+    res.json({
+      "Something went wrong creating Database or inserting Dummy data": error,
+    });
+  }
 }
 
 //Installation Routes
@@ -33,6 +42,9 @@ app.get("/dummy", dummyData);
 
 //Auth Routes
 app.post("/api/login", auth.generateToken);
+
+//front-end integration routes
+app.get("/api/cars/teste", carController.getCars);
 
 //Users Routes
 app.get("/api/users", auth.verifyAdmin, userController.getUsers);
