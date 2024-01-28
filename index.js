@@ -46,6 +46,7 @@ app.post("/api/login", auth.generateToken);
 //front-end integration routes
 app.get("/api/cars/teste", carController.getCars);
 app.get("/api/owners/teste", ownerController.getOwners);
+app.get("/api/users/teste", userController.getUsers);
 
 //Users Routes
 app.get("/api/users", auth.verifyAdmin, userController.getUsers);
