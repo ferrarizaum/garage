@@ -14,7 +14,7 @@ async function createCar(req, res) {
 //delete car
 async function deleteCar(req, res) {
   try {
-    const carName =  req.body.model;
+    const carName = req.body.model;
     const deletedCar = await Car.findOneAndDelete({ model: carName });
     if (!deletedCar) {
       return res.status(404).json({ message: "Car not found" });
@@ -32,12 +32,14 @@ async function updateCar(req, res) {
   try {
     const carName = req.params.name;
     if (!carName) {
-      return res.status(400).json({ message: "Car name is required for update" });
+      return res
+        .status(400)
+        .json({ message: "Car name is required for update" });
     }
     const updatedCar = await Car.findOneAndUpdate(
       { model: carName },
-      { $set: req.body }, 
-      { new: true } 
+      { $set: req.body },
+      { new: true }
     );
     if (!updatedCar) {
       return res.status(404).json({ message: "Car not found" });
@@ -69,6 +71,7 @@ async function initializeCarDummyData(req, res) {
       year: "1973",
       price: 30000,
       ownerName: "Jose Ferrari",
+      description: "Wild Brazilian 6 inline",
     },
     {
       model: "Camaro SS",
@@ -76,6 +79,7 @@ async function initializeCarDummyData(req, res) {
       year: "1969",
       price: 130000,
       ownerName: "Arlindo",
+      description: "I hate new camaros",
     },
     {
       model: "Maverick GT",
@@ -83,6 +87,7 @@ async function initializeCarDummyData(req, res) {
       year: "1974",
       price: 80000,
       ownerName: "Juquinha",
+      description: "Nice American 302",
     },
     {
       model: "Tigra",
@@ -90,6 +95,7 @@ async function initializeCarDummyData(req, res) {
       year: "1999",
       price: 20000,
       ownerName: "Lucas Rafael",
+      description: "Bottom Text",
     },
     {
       model: "Mustang",
@@ -97,6 +103,7 @@ async function initializeCarDummyData(req, res) {
       year: "1969",
       price: 1500000,
       ownerName: "Hernandes Zanella",
+      description: "Mustang is a Mustang",
     },
   ];
 
@@ -109,13 +116,12 @@ async function initializeCarDummyData(req, res) {
   } catch (error) {
     console.log({ "Something went wrong inserting dummy car data": error });
   }
-  
 }
 
 module.exports = {
   createCar, //done
   deleteCar, //done
-  updateCar,//done
-  getCars,//done
+  updateCar, //done
+  getCars, //done
   initializeCarDummyData, //done
 };
