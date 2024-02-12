@@ -72,6 +72,8 @@ async function initializeCarDummyData(req, res) {
       price: 30000,
       ownerName: "Jose Ferrari",
       description: "Wild Brazilian 6 inline",
+      image:
+        "https://lartbr.com.br/wp-content/uploads/2023/05/677A542A-C7EA-45CD-9E5B-E037FE308638.jpeg",
     },
     {
       model: "Camaro SS",
@@ -80,6 +82,7 @@ async function initializeCarDummyData(req, res) {
       price: 130000,
       ownerName: "Arlindo",
       description: "I hate new camaros",
+      image: "https://lartbr.com.br/wp-content/uploads/2022/08/IMG_7487.jpg",
     },
     {
       model: "Maverick GT",
@@ -88,15 +91,9 @@ async function initializeCarDummyData(req, res) {
       price: 80000,
       ownerName: "Juquinha",
       description: "Nice American 302",
+      image: "https://lartbr.com.br/wp-content/uploads/2022/12/IMG_8856.jpg",
     },
-    {
-      model: "Tigra",
-      maker: "Chevrolet",
-      year: "1999",
-      price: 20000,
-      ownerName: "Lucas Rafael",
-      description: "Bottom Text",
-    },
+
     {
       model: "Mustang",
       maker: "Ford",
@@ -104,6 +101,7 @@ async function initializeCarDummyData(req, res) {
       price: 1500000,
       ownerName: "Hernandes Zanella",
       description: "Mustang is a Mustang",
+      image: "https://lartbr.com.br/wp-content/uploads/2022/07/IMG_9617.jpg",
     },
   ];
 
