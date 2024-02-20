@@ -11,9 +11,10 @@ async function generateToken(req, res) {
     if (!user || user.password !== password) {
       return res.status(401).json({ message: "Authentication failed" });
     }
+    const name = user.name;
     const token = jwt.sign({ user }, secretKey, { expiresIn: "1h" });
 
-    res.json({ token });
+    res.json({ token, name });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
